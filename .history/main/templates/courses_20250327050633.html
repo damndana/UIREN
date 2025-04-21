@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="group">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M10,2A8,8,0,1,0,18,10,8,8,0,0,0,10,2Zm0,14A6,6,0,1,1,16,10,6,6,0,0,1,10,16Z"/>
+        <line x1="21" y1="21" x2="15" y2="15" stroke="#bdbecb" stroke-width="2"/>
+      </svg>
+      <input placeholder="Search courses..." type="text" name="search" class="input" />
+    </div>
+    <div class="sidebar-item">
+      <img src="https://img.icons8.com/color/48/dashboard-layout.png" class="icon"/> Dashboard
+    </div>
+    <div class="sidebar-item">
+      <img src="https://img.icons8.com/color/48/calendar--v1.png" class="icon"/> Schedule
+    </div>
+    <div class="sidebar-item">
+      <img src="https://img.icons8.com/ios-filled/50/chat.png" class="icon"/> Messages
+    </div>
+  </div>
+
+  <!-- Course Content -->
+  <div class="course-section">
+    <h2 class="section-title">Popular Courses</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        <div class="card">AI & ML</div>
+        <div class="card">Music</div>
+        <div class="card">Web Development</div>
+        <div class="card">Design</div>
+        <div class="card">Public Speaking</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

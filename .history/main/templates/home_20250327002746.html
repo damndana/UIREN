@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<video autoplay muted loop id="bg-video">
+  <source src="{% static 'videos/Background.mov' %}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="{% url 'home' %}" class="nav-link">Home</a>
+    <a href="{% url 'courses' %}" class="nav-link">Courses</a>
+    <div class="dropdown">
+      <button class="dropbtn nav-link">Categories</button>
+      <div class="dropdown-content">
+        <a href="#">Design</a>
+        <a href="#">Web Dev</a>
+        <a href="#">Marketing</a>
+        <a href="#">Music</a>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="{% url 'about' %}" class="nav-link">About Us</a>
+    <a href="{% url 'signin' %}" class="nav-link">Sign In / Register</a>
+  </div>
+</nav>
+
+<div class="hero-content">
+  <h1 class="glassy-logo">Share Skill, Get Skill</h1>
+
+  <div class="filter-buttons">
+    <button class="filter-btn">Newest</button>
+    <button class="filter-btn">Popular</button>
+    <button class="filter-btn">High Rating</button>
+  </div>
+
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      autocomplete="off"
+      placeholder="Search courses..."
+      name="text"
+      type="text"
+    />
+    <span class="search-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 128 128">
+        <path fill="#CA2C31" d="M3.77 71.73l16.34-16.1l27.82-4.93l-2.75 14.56L7.57 76.82l-2.43-1.05z"></path>
+        <!-- ...SVG shortened for brevity... -->
+      </svg>
+    </span>
+  </div>
+
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <div class="card">Design</div>
+      <div class="card">Web Dev</div>
+      <div class="card">Marketing</div>
+      <div class="card">Music</div>
+      <div class="card">AI & Data</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

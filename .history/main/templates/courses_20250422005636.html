@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Courses Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .register-btn {
+      margin-top: 12px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: linear-gradient(to right, #b14fff, #7f00ff);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .register-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #9333ea;
+    }
+  </style>
+</head>
+<body class="courses-body" style="background: url('{% static "animations/background.jpeg" %}') no-repeat center center; background-size: cover;">
+
+  <div class="sidebar">
+    <div class="group">
+      <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l4.39 4.4l-1.41 1.4l-4.4-4.39A8 8 0 1 1 10 2m0 2a6 6 0 1 0 0 12a6 6 0 0 0 0-12z"/></svg>
+      <input id="course-search" class="input" type="text" placeholder="Search courses...">
+    </div>
+
+    <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=ScheduleACourseWithUiren!&dates=20250430T150000Z/20250430T153000Z&details=ScheduleACourseWithUiren!&location=Almaty&sf=true" 
+       target="_blank" class="sidebar-icon">
+      <img src="{% static 'icons/calendar-days.png' %}" class="icon-img">
+      <span>Schedule</span>
+    </a>
+  </div>
+
+  <div class="main-content">
+    <h2 class="section-title">All Courses</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        {% for course in courses %}
+          <div class="card">
+            <img src="{{ course.image.url }}" alt="{{ course.title }}">
+            <p>{{ course.title }}</p>
+            <form action="{% url 'register_course' course_id=course.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="signin-btn">Register</button>
+            </form>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // SEARCH FUNCTION
+    const searchBar = document.getElementById("course-search");
+    searchBar.addEventListener("input", () => {
+      const query = searchBar.value.toLowerCase();
+      document.querySelectorAll(".carousel .card").forEach(card => {
+        const title = card.querySelector("p").textContent.toLowerCase();
+        card.style.display = title.includes(query) ? "flex" : "none";
+      });
+    });
+  </script>
+</body>
+</html>

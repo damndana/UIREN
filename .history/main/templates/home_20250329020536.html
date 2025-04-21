@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share Skill, Get Skill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Raleway:wght@400;700&family=Tektur&family=DM+Sans&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .circular-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      perspective: 1200px;
+      margin-top: 50px;
+    }
+
+    .circular-carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: rotateCarousel 20s infinite linear;
+    }
+
+    .circular-carousel .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      transition: transform 0.5s;
+    }
+
+    @keyframes rotateCarousel {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="bg-video">
+    <source src="{% static 'videos/Background.mov' %}" type="video/mp4">
+  </video>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'courses' %}">Courses</a>
+      <div class="dropdown">
+        <button class="dropbtn">Categories</button>
+        <div class="dropdown-content">
+          <a href="#">Design</a>
+          <a href="#">Web Dev</a>
+          <a href="#">Marketing</a>
+          <a href="#">Music</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="{% url 'about' %}">About Us</a>
+      <a href="{% url 'signin' %}">Sign In / Register</a>
+    </div>
+  </nav>
+
+  <section class="hero-content">
+    <h1 class="hero-title">Share Skill, Get Skill</h1>
+
+    <div class="filter-buttons">
+      <button>Newest</button>
+      <button>Popular</button>
+      <button>High Rating</button>
+    </div>
+
+    <div class="search-wrapper">
+      <input id="home-search" class="search-input" placeholder="Search here..." type="text" />
+      <span class="search-icon">
+        <img src="{% static '/animations/rocket (1).png' %}" alt="Search Icon" />
+      </span>
+    </div>
+
+    <div class="circular-carousel-wrapper">
+      <div class="circular-carousel" id="circularCarousel">
+        {% for index, course in courses %}
+        <div class="card" style="transform: rotateY({{ forloop.counter0|add:'0'|divisibleby:'1'|yesno:'0,1' }}deg) translateZ(300px);">
+          <lottie-player src="{% static course.animation %}" background="transparent" speed="1" loop autoplay></lottie-player>
+          <p>{{ course.title }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="circular-carousel-container">
+        <div class="circular-carousel">
+          <div class="card"><lottie-player src="{% static 'animations/webdev.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Web Development</p></div>
+          <div class="card"><lottie-player src="{% static 'animations/graphicdesign.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Design</p></div>
+          <div class="card"><lottie-player src="{% static 'animations/outbound-marketing.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Marketing</p></div>
+          <div class="card"><lottie-player src="{% static 'animations/AI.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>AI & ML</p></div>
+          <div class="card"><lottie-player src="{% static 'animations/musician-in-studio.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Music</p></div>
+          <div class="card"><lottie-player src="{% static 'animations/content-creator-for-digital-marketing.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Public Speech</p></div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <script>
+    const carousel = document.querySelector("#circularCarousel");
+    const cards = carousel.children;
+    const radius = 300;
+    const angleStep = 360 / cards.length;
+
+    Array.from(cards).forEach((card, index) => {
+      const angle = angleStep * index;
+      card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+    });
+  </script>
+</body>
+</html>

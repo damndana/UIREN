@@ -1,0 +1,428 @@
+/* === GLOBAL === */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'DM Sans', 'Raleway', 'Roboto Mono', 'Tektur', sans-serif;
+  color: white;
+  background: black;
+}
+
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* === NAVBAR === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  position: relative;
+}
+
+.navbar a:hover {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(to right, #b14fff, #7f00ff);
+  border-image-slice: 1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  color: white;
+  font-family: 'Raleway';
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #111;
+  min-width: 120px;
+  z-index: 1;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background: linear-gradient(to right, #b14fff, #7f00ff);
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* === HERO === */
+.hero-content {
+  text-align: center;
+  margin-top: 120px;
+  z-index: 10;
+  position: relative;
+}
+
+.hero-title {
+  font-family: 'Tektur', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(135, 16, 214);
+  margin-bottom: 20px;
+  margin-top: -95px;
+}
+
+/* === FILTER BUTTONS === */
+.filter-buttons {
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  background-color: rgba(124, 50, 142, 0.2);
+  border: none;
+  color: rgb(148, 148, 216);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  margin: 0 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-buttons button:hover,
+.filter-buttons button.selected {
+  background: linear-gradient(to right, #b14fff, #7f00ff);
+  color: white;
+  font-weight: bold;
+}
+
+/* === SEARCH === */
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 50px;
+  gap: 12px;
+}
+
+.search-wrapper input {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgb(20, 1, 1);
+  font-family: monospace;
+  border-radius: 9999px;
+  padding: 0.5rem 1.5rem;
+  outline: none;
+  border: 1px solid rgba(148, 112, 214, 0.8);
+  box-shadow: 0 0 25px rgba(148, 112, 214, 0.8);
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+  width: 300px;
+}
+
+.search-wrapper input:focus {
+  border-color: rgba(148, 112, 214, 1);
+  box-shadow: 0 0 35px rgba(148, 112, 214, 1);
+}
+
+.search-wrapper span {
+  background-color: rgb(255, 251, 251);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(148, 112, 214, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-wrapper span img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  transform: rotate(-45deg);
+  transition: all 0.3s ease;
+}
+
+.search-wrapper span:hover {
+  box-shadow: 0 0 35px rgba(148, 112, 214, 1);
+  transform: scale(1.1);
+}
+
+/* === HOME PAGE CAROUSEL === */
+.home-carousel-wrapper {
+  margin-top: 50px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.home .card {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 320px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  scroll-snap-align: center;
+}
+
+.home .card lottie-player {
+  width: 180px;
+  height: 180px;
+  margin: auto;
+}
+
+.home .card p {
+  margin-top: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+}
+
+.home .card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* === COURSES PAGE === */
+.courses-body {
+  display: flex;
+  font-family: 'DM Sans', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 200px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 4px 0 20px rgba(148, 112, 214, 0.15);
+  border-radius: 0 20px 20px 0;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 40px;
+  overflow-y: auto;
+}
+
+.section-title {
+  font-family: 'Tektur', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  padding-left: 2.5rem;
+  border-radius: 12px;
+  background-color: #16171d;
+  color: #bdbecb;
+  border: none;
+  box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
+}
+
+.icon-img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(1.5);
+}
+
+.sidebar-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-icon:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.courses-carousel {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.courses-carousel .card {
+  flex: 0 0 auto;
+  width: 240px;
+  height: 320px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  scroll-snap-align: center;
+}
+
+.courses-carousel .card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 12px 30px rgba(255, 255, 255, 0.1);
+}
+
+.courses-carousel .card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.courses-carousel .card p {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: white;
+  text-align: center;
+}
+
+/* Hide duplicate card titles in Courses */
+.card .card-title-top {
+  display: none;
+}
+/* === SIGN IN PAGE === */
+.signin-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.signin-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 360px;
+  box-shadow: 0 0 25px rgba(148, 112, 214, 0.4);
+  text-align: center;
+}
+
+.signin-title {
+  color: white;
+  font-family: 'Tektur', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: #16171d;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 0 0 2px rgba(124, 50, 142, 0.3);
+  outline: none;
+}
+
+.input-group input:focus {
+  box-shadow: 0 0 0 2px #7f00ff;
+}
+
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  top: 38px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.signin-btn {
+  background: linear-gradient(to right, #b14fff, #7f00ff);
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.signin-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 12px #7f00ff;
+}
+
+.auth-alt {
+  color: white;
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
+.auth-alt a {
+  color: #b14fff;
+  text-decoration: none;
+}

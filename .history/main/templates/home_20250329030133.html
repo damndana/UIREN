@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share Skill, Get Skill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Raleway:wght@400;700&family=Tektur&family=DM+Sans&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .hero-content {
+      text-align: center;
+      margin-top: 120px;
+    }
+
+    .hero-title {
+      font-family: 'Tektur', sans-serif;
+      font-size: 3rem;
+      color: #a855f7;
+      margin-bottom: 30px;
+    }
+
+    .filter-buttons button {
+      margin: 0 8px;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Roboto Mono';
+      color: #ccc;
+      transition: all 0.3s ease;
+    }
+    .filter-buttons button:hover {
+      background: linear-gradient(to right, #9333ea, #7f00ff);
+      color: white;
+    }
+
+    .search-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px 0;
+      gap: 16px;
+    }
+    .search-input {
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      border: none;
+      outline: none;
+      width: 300px;
+      background: #eee;
+      color: black;
+    }
+    .search-icon img {
+      width: 40px;
+      height: 40px;
+      transform: rotate(-45deg);
+      filter: drop-shadow(0 0 6px #9333ea);
+    }
+
+    .circular-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      perspective: 1200px;
+    }
+
+    .circular-carousel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCarousel 20s linear infinite;
+    }
+
+    .circular-carousel .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      width: 220px;
+      height: 320px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+      padding: 16px;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .circular-carousel .card lottie-player {
+      width: 180px;
+      height: 180px;
+      margin: auto;
+    }
+
+    .circular-carousel .card p {
+      margin-top: 10px;
+      font-family: 'DM Sans';
+      font-size: 1rem;
+    }
+
+    @keyframes rotateCarousel {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="bg-video">
+    <source src="{% static 'videos/Background.mov' %}" type="video/mp4">
+  </video>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'courses' %}">Courses</a>
+      <div class="dropdown">
+        <button class="dropbtn">Categories</button>
+        <div class="dropdown-content">
+          <a href="#">Design</a>
+          <a href="#">Web Dev</a>
+          <a href="#">Marketing</a>
+          <a href="#">Music</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <a href="{% url 'about' %}">About Us</a>
+      <a href="{% url 'signin' %}">Sign In / Register</a>
+    </div>
+  </nav>
+
+  <section class="hero-content">
+    <h1 class="hero-title">Share Skill, Get Skill</h1>
+
+    <div class="filter-buttons">
+      <button>Newest</button>
+      <button>Popular</button>
+      <button>High Rating</button>
+    </div>
+
+    <div class="search-wrapper">
+      <input id="home-search" class="search-input" placeholder="Search here..." type="text" />
+      <span class="search-icon">
+        <img src="{% static '/animations/rocket (1).png' %}" alt="Search Icon" />
+      </span>
+    </div>
+
+    <div class="circular-carousel-wrapper">
+      <div class="circular-carousel" id="circularCarousel">
+        <div class="card" data-title="Web Development"><lottie-player src="{% static 'animations/webdev.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Web Development</p></div>
+        <div class="card" data-title="Design"><lottie-player src="{% static 'animations/graphicdesign.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Design</p></div>
+        <div class="card" data-title="Marketing"><lottie-player src="{% static 'animations/outbound-marketing.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Marketing</p></div>
+        <div class="card" data-title="AI & ML"><lottie-player src="{% static 'animations/AI.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>AI & ML</p></div>
+        <div class="card" data-title="Music"><lottie-player src="{% static 'animations/musician-in-studio.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Music</p></div>
+        <div class="card" data-title="Public Speech"><lottie-player src="{% static 'animations/content-creator-for-digital-marketing.json' %}" background="transparent" speed="1" loop autoplay></lottie-player><p>Public Speech</p></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const carousel = document.querySelector('#circularCarousel');
+    const cards = carousel.querySelectorAll('.card');
+    const radius = 350;
+    const total = cards.length;
+    const angleStep = 360 / total;
+
+    cards.forEach((card, i) => {
+      const angle = angleStep * i;
+      card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+    });
+
+    const searchInput = document.getElementById("home-search");
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const title = card.getAttribute("data-title").toLowerCase();
+        card.style.display = title.includes(query) ? "block" : "none";
+      });
+    });
+  </script>
+</body>
+</html>

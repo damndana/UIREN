@@ -1,0 +1,171 @@
+{}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Courses Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Raleway:wght@400;700&family=Tektur&family=DM+Sans&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      background: #050017;
+      font-family: 'DM Sans', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      background: transparent;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-icon {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .search-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .search-input {
+      background-color: #e4e4e4;
+      color: #333;
+      font-family: monospace;
+      border-radius: 9999px;
+      padding: 12px 20px;
+      width: 300px;
+      border: 1px solid #bbb;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .courses-carousel {
+      display: flex;
+      gap: 20px;
+      overflow-x: scroll;
+      padding-bottom: 20px;
+    }
+
+    .course-card {
+      flex: 0 0 260px;
+      height: 360px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+
+    .course-card:hover {
+      transform: scale(1.05);
+    }
+
+    .course-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 20px 20px 0 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .course-title {
+      margin-top: 20px;
+      font-family: 'Tektur', sans-serif;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-icon">
+      <span>📊</span> <!-- 📊 Dashboard Icon -->
+      <span>Dashboard</span>
+    </div>
+    <div class="sidebar-icon">
+      <span>📅</span> <!-- 📅 Schedule Icon -->
+      <span>Schedule</span>
+    </div>
+    <div class="sidebar-icon">
+      <span>💬</span> <!-- 💬 Message Icon -->
+      <span>Messages</span>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="search-section">
+      <h2 style="font-family: 'Tektur', sans-serif;">Popular Courses</h2>
+      <input class="search-input" type="text" placeholder="Search courses...">
+    </div>
+
+    <div class="courses-carousel">
+      <div class="course-card">
+        <div class="course-image" style="background-image: url('{% static 'animations/ai-ml.jpg' %}')"></div>
+        <div class="course-title">AI & ML</div>
+      </div>
+      <div class="course-card">
+        <div class="course-image" style="background-image: url('{% static 'animations/music.jpg' %}')"></div>
+        <div class="course-title">Music</div>
+      </div>
+      <div class="course-card">
+        <div class="course-image" style="background-image: url('{% static 'animations/webdev.jpg' %}')"></div>
+        <div class="course-title">Web Development</div>
+      </div>
+      <div class="course-card">
+        <div class="course-image" style="background-image: url('{% static 'animations/design.jpg' %}')"></div>
+        <div class="course-title">Design</div>
+      </div>
+      <!-- Add more course cards here -->
+    </div>
+  </div>
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const cards = document.querySelectorAll('.carousel-card');
+  
+    function getCenteredCard() {
+      const containerCenter = track.scrollLeft + track.offsetWidth / 2;
+      let closestCard = null;
+      let closestDistance = Infinity;
+  
+      cards.forEach(card => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(containerCenter - cardCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestCard = card;
+        }
+      });
+  
+      cards.forEach(card => card.classList.remove('active'));
+      if (closestCard) closestCard.classList.add('active');
+    }
+  
+    track.addEventListener('scroll', () => {
+      window.requestAnimationFrame(getCenteredCard);
+    });
+  
+    window.addEventListener('load', getCenteredCard);
+  </script>
+  
+</body>
+</html>

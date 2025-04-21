@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Courses Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Raleway:wght@400;700&family=Tektur&family=DM+Sans&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="courses-body">
+  <div class="sidebar">
+    <div class="group">
+      <svg class="search-icon" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l4.39 4.4l-1.41 1.4l-4.4-4.39A8 8 0 1 1 10 2m0 2a6 6 0 1 0 0 12a6 6 0 0 0 0-12z"/>
+      </svg>
+      <input class="input" type="text" placeholder="Search courses...">
+    </div>
+    <div class="sidebar-icon"><span>📊</span><span>Dashboard</span></div>
+    <div class="sidebar-icon"><span>📅</span><span>Schedule</span></div>
+    <div class="sidebar-icon"><span>💬</span><span>Messages</span></div>
+  </div>
+
+  <div class="main-content">
+    <div class="search-section">
+      <h2 class="section-title">Popular Courses</h2>
+    </div>
+
+    <div class="carousel-wrapper">
+      <div class="carousel carousel-track">
+        <div class="card">
+          <img src="{% static 'animations/ai-ml.jpg' %}" alt="AI & ML">
+          <p>AI & ML</p>
+        </div>
+        <div class="card">
+          <img src="{% static 'animations/music.jpg' %}" alt="Music">
+          <p>Music</p>
+        </div>
+        <div class="card">
+          <img src="{% static 'animations/webdev.jpg' %}" alt="Web Dev">
+          <p>Web Development</p>
+        </div>
+        <div class="card">
+          <img src="{% static 'animations/design.jpg' %}" alt="Design">
+          <p>Design</p>
+        </div>
+        <div class="card">
+          <img src="{% static 'animations/public.jpg' %}" alt="Public Speaking">
+          <p>Public Speaking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const carouselWrapper = document.querySelector('.carousel-wrapper');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+  
+    carouselWrapper.addEventListener('mousedown', (e) => {
+      isDown = true;
+      carouselWrapper.classList.add('active');
+      startX = e.pageX - carouselWrapper.offsetLeft;
+      scrollLeft = carouselWrapper.scrollLeft;
+    });
+  
+    carouselWrapper.addEventListener('mouseleave', () => {
+      isDown = false;
+      carouselWrapper.classList.remove('active');
+    });
+  
+    carouselWrapper.addEventListener('mouseup', () => {
+      isDown = false;
+      carouselWrapper.classList.remove('active');
+    });
+  
+    carouselWrapper.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - carouselWrapper.offsetLeft;
+      const walk = (x - startX) * 2; // Adjust scrolling speed
+      carouselWrapper.scrollLeft = scrollLeft - walk;
+    });
+  </script>
+</body>
+</html>

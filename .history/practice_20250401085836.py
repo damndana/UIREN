@@ -1,0 +1,1 @@
+f=open('/Users/dana/uiren_full/main/static/icons/list.pdf')

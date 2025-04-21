@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Courses Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="courses-body" style="background: url('{% static "animations/background.jpeg" %}') no-repeat center center; background-size: cover;">
+
+  <div class="sidebar">
+    <div class="group">
+      <svg class="search-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l4.39 4.4l-1.41 1.4l-4.4-4.39A8 8 0 1 1 10 2m0 2a6 6 0 1 0 0 12a6 6 0 0 0 0-12z"/></svg>
+      <input id="course-search" class="input" type="text" placeholder="Search courses...">
+    </div>
+
+    <a href="https://calendar.google.com/calendar/u/0/r/eventedit?text=ScheduleACourse&dates=20250430T150000Z/20250430T153000Z&details=Prepare+with+Mockmate+AI+interviewer&location=mockmate.ai&sf=true" 
+   target="_blank" class="sidebar-icon">
+  <img src="{% static 'icons/calendar-days.png' %}" class="icon-img">
+  <span>Schedule</span>
+</a>
+  </div>
+
+  <div class="main-content">
+    <h2 class="section-title">Popular Courses</h2>
+    <div class="carousel-wrapper" id="carousel-popular">
+      <div class="carousel">
+        <div class="card"><img src="{% static 'animations/robotics.png' %}" alt="Robotics"><p>Robotics</p></div>
+        <div class="card"><img src="{% static 'animations/Dawn Meditation by the Lake_ Serenity in Pink and Purple.jpg' %}" alt="Meditation"><p>Meditation & Mindfulness</p></div>
+        <div class="card"><img src="{% static 'animations/guitar30days.jpg' %}" alt="Guitar"><p>Learn Guitar in 30 Days</p></div>
+        <div class="card"><img src="{% static 'animations/motiondesign.png' %}" alt="Motion"><p>Motion Design in After Effects</p></div>
+        <div class="card"><img src="{% static 'animations/timemanagement.jpg' %}" alt="Time"><p>Time Management like a CEO</p></div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 60px;">Top Picks For You</h2>
+    <div class="carousel-wrapper" id="carousel-top">
+      <div class="carousel">
+        <div class="card"><img src="{% static 'animations/introtoai.png' %}"><p>Intro to AI</p></div>
+        <div class="card"><img src="{% static 'animations/sounddesign.webp' %}" alt="Music"><p>Sound Design Essentials</p></div>
+        <div class="card"><img src="{% static 'animations/design-thinking.jpg' %}" alt="Design"><p>Creative Thinking for Designers</p></div>
+        <div class="card"><img src="{% static 'animations/speak.jpg' %}" alt="Public"><p>Speak Like a Pro</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // SEARCH FUNCTION
+    const searchBar = document.getElementById("course-search");
+    searchBar.addEventListener("input", () => {
+      const query = searchBar.value.toLowerCase();
+      document.querySelectorAll(".carousel .card").forEach(card => {
+        const title = card.querySelector("p").textContent.toLowerCase();
+        card.style.display = title.includes(query) ? "flex" : "none";
+      });
+    });
+
+    // SCROLL + ZOOM FUNCTION PER CAROUSEL
+    document.querySelectorAll(".carousel-wrapper").forEach((wrapper) => {
+      const carousel = wrapper.querySelector(".carousel");
+      let isDown = false, startX, scrollLeft;
+      let scrollPos = 0;
+
+      // Drag scroll (mouse)
+      wrapper.addEventListener("mousedown", (e) => {
+        isDown = true;
+        startX = e.pageX - wrapper.offsetLeft;
+        scrollLeft = wrapper.scrollLeft;
+      });
+      wrapper.addEventListener("mouseup", () => isDown = false);
+      wrapper.addEventListener("mouseleave", () => isDown = false);
+      wrapper.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        const x = e.pageX - wrapper.offsetLeft;
+        const walk = (x - startX) * 2;
+        wrapper.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch scroll (mobile)
+      wrapper.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].pageX;
+        scrollLeft = wrapper.scrollLeft;
+      });
+      wrapper.addEventListener("touchmove", (e) => {
+        const x = e.touches[0].pageX;
+        const walk = (x - startX) * 2;
+        wrapper.scrollLeft = scrollLeft - walk;
+      });
+
+      // Auto scroll
+      function startAutoScroll() {
+        return setInterval(() => {
+          scrollPos += 1.5;
+          if (scrollPos >= carousel.scrollWidth - carousel.clientWidth) {
+            scrollPos = 0;
+          }
+          carousel.scrollTo({ left: scrollPos, behavior: "smooth" });
+        }, 20);
+      }
+
+      let autoScrollInterval = startAutoScroll();
+      wrapper.addEventListener("mouseenter", () => clearInterval(autoScrollInterval));
+      wrapper.addEventListener("mouseleave", () => {
+        autoScrollInterval = startAutoScroll();
+      });
+    });
+
+    // Zoom on hover
+    document.querySelectorAll(".card").forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        card.style.transform = "scale(1.07)";
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "scale(1)";
+      });
+    });
+  </script>
+</body>
+</html>

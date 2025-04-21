@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<video autoplay muted loop id="bg-video">
+  <source src="{% static 'videos/Background.mov' %}" type="video/mp4" />
+</video>
+
+<div class="hero-content">
+  <h1 class="main-title">Share Skill, Get Skill</h1>
+
+  <div class="search-wrapper">
+    <input
+      class="search-input"
+      placeholder="Search here..."
+      type="text"
+      name="text"
+    />
+    <span class="search-icon">
+      <!-- You can paste the full SVG here -->
+      🔍
+    </span>
+  </div>
+
+  <div class="carousel-wrapper">
+    <!-- We'll insert your course carousel here -->
+    {% include 'partials/carousel.html' %}
+  </div>
+</div>
+{% endblock %}

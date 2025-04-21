@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Courses Page</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Raleway:wght@400;700&family=Tektur&family=DM+Sans&display=swap">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .carousel {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 20px 10px;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      position: relative;
+      flex: 0 0 auto;
+      width: 240px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.05);
+      scroll-snap-align: center;
+      backdrop-filter: blur(8px);
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 50%;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+      pointer-events: none;
+    }
+
+    .card p {
+      position: absolute;
+      bottom: 15px;
+      left: 20px;
+      font-family: 'Tektur', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .card:hover p {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="courses-body" style="background: url('{% static 'animations/background.jpeg' %}') no-repeat center center; background-size: cover;">
+  <div class="sidebar">
+    <div class="group">
+      <svg class="search-icon" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.9l4.39 4.4l-1.41 1.4l-4.4-4.39A8 8 0 1 1 10 2m0 2a6 6 0 1 0 0 12a6 6 0 0 0 0-12z"/>
+      </svg>
+      <input class="input" type="text" placeholder="Search courses...">
+    </div>
+    <div class="sidebar-icon"><span>📊</span><span>Dashboard</span></div>
+    <div class="sidebar-icon"><span>📅</span><span>Schedule</span></div>
+    <div class="sidebar-icon"><span>💬</span><span>Messages</span></div>
+  </div>
+
+  <div class="main-content">
+    <div class="search-section">
+      <h2 class="section-title">Popular Courses</h2>
+    </div>
+
+    <div class="carousel-wrapper">
+      <div class="carousel">
+        <div class="card">
+          <img src="{% static 'animations/robotics.png' %}" alt="Robotics">
+        </div>
+        <p class="course-title">Robotics</p>
+    
+        <div class="card">
+          <img src="{% static 'animations/Dawn Meditation by the Lake_ Serenity in Pink and Purple.jpg' %}" alt="Meditation">
+        </div>
+        <p class="course-title">Meditation & Mindfulness</p>
+    
+        <div class="card">
+          <img src="{% static 'animations/guitar30days.jpg' %}" alt="Guitar">
+        </div>
+        <p class="course-title">Learn Guitar in 30 Days</p>
+    
+        <div class="card">
+          <img src="{% static 'animations/motiondesign.png' %}" alt="Motion Design">
+        </div>
+        <p class="course-title">Motion Design in After Effects</p>
+    
+        <div class="card">
+          <img src="{% static 'animations/timemanagement.jpg' %}" alt="Time Management">
+        </div>
+        <p class="course-title">Time Management like a CEO</p>
+      </div>
+    </div>
+
+  <script>
+    const carousel = document.querySelector('.carousel');
+    let scrollAmount = 0;
+    let isPaused = false;
+
+    carousel.addEventListener('mouseenter', () => isPaused = true);
+    carousel.addEventListener('mouseleave', () => isPaused = false);
+
+    function autoScrollCarousel() {
+      if (!carousel || isPaused) return;
+      scrollAmount += 2;
+      if (scrollAmount >= carousel.scrollWidth - carousel.clientWidth) scrollAmount = 0;
+      carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    setInterval(autoScrollCarousel, 40); // faster movement
+  </script>
+</body>
+</html>
