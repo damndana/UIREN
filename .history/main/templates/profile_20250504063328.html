@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="my_profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<style> 
+  /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body and Background */
+  body {
+    font-family: 'Press Start 2P', cursive;
+    background: url('images/mainback.jpg') center/cover no-repeat;
+    background-attachment: fixed;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .profile-info h2 {
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  /* Profile Actions (Column Layout) */
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 20px;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: block;
+  }
+  
+  .dropbtn {
+    background-color: #7da0c4;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 100%;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content p {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+  }
+  
+  .dropdown-content p:hover {
+    background-color: #ddd;
+  }
+  
+  /* Booking Section */
+  .booking {
+    padding: 20px;
+    background-color: #cce6ff;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .space {
+    display: flex;
+    justify-content: space-between;
+    background-color: #4CAF50;
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .book-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .book-btn:hover {
+    background-color: #da190b;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: auto;
+  }
+</style>
+<body>
+
+<!-- Profile Header -->
+<div class="profile-header">
+    <img src="avatar.png" alt="Student Avatar" class="profile-avatar">
+    <div class="profile-info">
+        <h2>@nickname</h2>
+        <p>Major: Computer Science</p>
+        <p>Course: Data Science</p>
+    </div>
+</div>
+
+<!-- Profile Actions (Column Layout) -->
+<div class="profile-actions">
+    <div class="dropdown">
+        <button class="dropbtn">My Events</button>
+        <div class="dropdown-content">
+            <p>A-concert - 5 points</p>
+            <p>Football Match - 3 points</p>
+            <p>Art Club Therapy Night - 7 points</p>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn">My Points</button>
+        <div class="dropdown-content">
+            <p>Total Points: 15</p>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn">Book Space</button>
+        <div class="dropdown-content">
+            <p>Red Hall</p>
+            <p>Blue Hall</p>
+        </div>
+    </div>
+</div>
+
+<!-- Booking -->
+<div class="booking">
+    <h3>Available Spaces:</h3>
+    <div class="space">
+        <h4>Red Hall</h4>
+        <button class="book-btn" onclick="redirectToQRCode('red-hall')">Book</button>
+    </div>
+    <div class="space">
+        <h4>Blue Hall</h4>
+        <button class="book-btn" onclick="redirectToQRCode('blue-hall')">Book</button>
+    </div>
+</div>
+<script>
+    function redirectToQRCode(space) {
+        // Redirect to the QR code page with the appropriate space parameter
+        window.location.href = qrcode_hall.html?space=${space};
+    }
+</script>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Student Portal | <a href="https://www.flaticon.com/free-icons/pixel" title="Pixel icons">Pixel icons created by Freepik - Flaticon</a> | <a href="https://www.flaticon.com/free-icons/pixelated" title="Pixelated icons">Pixelated icons created by Miguel C Balandrano - Flaticon</a></p>
+</footer>
+
+<script>
+const events = [
+    { name: 'A-concert', points: 5 },
+    { name: 'Football Match', points: 3 },
+    { name: 'Art Club Therapy Night', points: 7 },
+];
+
+let totalPoints = events.reduce((acc, event) => acc + event.points, 0);
+
+document.querySelector('.dropdown-content').innerHTML = events.map(event => 
+    <p>${event.name} - ${event.points} points</p>
+).join('');
+
+document.querySelector('.dropdown-content').innerHTML += <p>Total Points: ${totalPoints}</p>;
+
+function redirectToQRCode(space) {
+    // Replace the following with the actual page path to the QR code page
+    window.location.href = qr_code.html?space=${space};
+}
+</script>
+</body>
+</html>

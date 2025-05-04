@@ -1,55 +1,114 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Sign In</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
-</head>
-<body class="signin-page-body">
+{% extends 'base.html' %}
 
-  <div class="signin-layout-wrapper">
+{% block title %}Sign In - Sxodim.SDU{% endblock %}
 
-    <!-- 🚀 LEFT SIDE: Spline Rocket -->
-    <div class="signin-spline-wrapper">
-      <iframe src="https://my.spline.design/rocket-cbd6c1b1a70ae8e52d812e3b1f0f940c/" frameborder="0"></iframe>
+{% block content %}
+<div class="signin-container">
+    <h2>Sign In</h2>
+    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
     </div>
+    {% endif %}
 
-    <!-- 🔐 RIGHT SIDE: Form -->
-    <div class="signin-form-container">
-      <h2>Welcome Back</h2>
-      <form method="POST">
+    <form method="post" class="signin-form">
         {% csrf_token %}
-
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" placeholder="you@example.com" required />
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
         </div>
-
-        <div class="input-group password-group">
-          <label for="password">Password</label>
-          <input type="password" id="password-input" name="password" placeholder="••••••••" required />
-          <span class="toggle-password" onclick="togglePassword()">👁</span>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
         </div>
-
-        <button type="submit" class="signin-btn">Sign In</button>
-
-        <p class="auth-alt">
-          Don’t have an account?
-          <a href="{% url 'register_tutor' %}">Register as Tutor</a> |
-          <a href="{% url 'register_student' %}">Register as Student</a>
-        </p>
-      </form>
+        <button type="submit" class="signin-button">Sign In</button>
+    </form>
+    
+    <div class="register-link">
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
     </div>
+</div>
 
-  </div>
+<style>
+.signin-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
-  <script>
-    function togglePassword() {
-      const input = document.getElementById("password-input");
-      input.type = input.type === "password" ? "text" : "password";
-    }
-  </script>
-</body>
-</html>
+.signin-container h2 {
+    text-align: center;
+    color: #22223b;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #22223b;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+}
+
+.signin-button {
+    width: 100%;
+    background: #3a5ca8;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+.signin-button:hover {
+    background: #b39ddb;
+}
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.message.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+}
+</style>
+{% endblock %}

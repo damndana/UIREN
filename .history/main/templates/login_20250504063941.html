@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="signin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<style> 
+    /* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    background: url('mainback.jpg') center/cover no-repeat;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
+}
+
+/* Sign In Section */
+.sign-in-section {
+    padding: 50px 2rem;
+    min-height: 700px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-in-container {
+    background: #22223b;
+    padding: 30px;
+    border-radius: 12px;
+    width: 150%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 16px #0003;
+}
+
+h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+}
+
+button {
+    background-color: #3a5ca8;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #b39ddb;
+}
+
+p {
+    color: #fff;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    color: #fff;
+    padding: 10px;
+    background: #22223b;
+}
+</style>
+<body>
+
+<section class="sign-in-section">
+    <div class="sign-in-container">
+        <h2>Login</h2>
+
+        <form class="sign-in-form">
+            <input type="email" id="email" placeholder="Enter Email" required><br>
+            <input type="password" id="password" placeholder="Enter Password" required><br>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Don't have an account? <a href="signin.html">Sign Up</a></p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Sxodim.SDU</p>
+</footer>
+
+</body>
+</html>

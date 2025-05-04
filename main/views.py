@@ -1,128 +1,108 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .forms import TutorRegistrationForm, StudentRegistrationForm
-from .models import TutorProfile, StudentProfile
-from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Course
+from .models import UserProfile, Event, Space, UserEvent, SpaceBooking  # Import new models
+from django.contrib import messages
+from .forms import UserRegistrationForm, UserProfileForm  # Import the forms for registration
+from django.views.decorators.http import require_POST
+import logging
+from django.utils import timezone
 
-# === Home Page ===
-def home(request):
-    return render(request, 'home.html')
+logger = logging.getLogger(__name__)
 
-# === Courses Page ===
-def courses(request):
-    return render(request, 'courses.html')
-
-# === Categories Page ===
-def categories(request):
-    return render(request, 'categories.html')
-
-# === About Page ===
-def about(request):
-    return render(request, 'about.html')
-
-# === Sign In ===
-def signin(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        if not (email and password):
-            return HttpResponse("Missing fields", status=400)
-
-        try:
-            user = User.objects.get(email=email)
-            if user.check_password(password):
-                login(request, user)
-                return redirect("profile")
-            else:
-                return HttpResponse("Incorrect password", status=401)
-        except User.DoesNotExist:
-            return HttpResponse("User not found", status=404)
-
-    return render(request, "signin.html")
-
-# === Register Tutor ===
-def register_tutor(request):
+# Registration view
+def register(request):
     if request.method == 'POST':
-        form = TutorRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            full_name = form.cleaned_data['full_name']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            experience = form.cleaned_data['experience']
-            bio = form.cleaned_data['bio']
-
-            user = User.objects.create_user(
-                username=email,
-                email=email,
-                password=password
-            )
-
-            TutorProfile.objects.create(
+            user = form.save()
+            # Create user profile
+            UserProfile.objects.create(
                 user=user,
-                full_name=full_name,
-                experience=experience,
-                bio=bio
+                role=form.cleaned_data.get('role', 'Student'),
+                major=form.cleaned_data.get('major', '')
             )
-
             login(request, user)
-            return redirect('profile')
+            messages.success(request, 'Registration successful!')
+            return redirect('home')
     else:
-        form = TutorRegistrationForm()
-    return render(request, 'register_tutor.html', {'form': form})
+        form = UserRegistrationForm()
+    return render(request, 'register.html', {'form': form})
 
-
-# === Register Student ===
-def register_student(request):
+# Sign-in view
+def signin(request):
     if request.method == 'POST':
-        form = StudentRegistrationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-
-            if User.objects.filter(username=email).exists():
-                return HttpResponse("User already exists", status=400)
-
-            user = User.objects.create_user(
-                username=email,
-                email=email,
-                password=form.cleaned_data['password'],
-                first_name=form.cleaned_data['full_name']
-            )
-
-            student = form.save(commit=False)
-            student.user = user
-            student.save()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             login(request, user)
-            return redirect('profile')
-    else:
-        form = StudentRegistrationForm()
-    return render(request, 'register_student.html', {'form': form})
+            messages.success(request, 'Successfully signed in!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'signin.html')
 
-# === Profile View ===
+# Home view
+def home(request):
+    # Get upcoming events, excluding those without dates
+    upcoming_events = Event.objects.exclude(date__isnull=True).filter(
+        date__gte=timezone.now()
+    ).order_by('date')[:3]
+    
+    # If we don't have enough upcoming events, add some without dates
+    if upcoming_events.count() < 3:
+        additional_events = Event.objects.filter(date__isnull=True)[:3-upcoming_events.count()]
+        upcoming_events = list(upcoming_events) + list(additional_events)
+    
+    return render(request, 'home.html', {
+        'upcoming_events': upcoming_events,
+    })
+
+# Profile view
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html', {'user': request.user})
+    user_profile = UserProfile.objects.get_or_create(user=request.user)[0]
+    attended_events = UserEvent.objects.filter(user=request.user)
+    total_points = sum(event.event.points for event in attended_events)
+    available_spaces = Space.objects.all()
+    return render(request, 'profile.html', {
+        'user_profile': user_profile,
+        'attended_events': attended_events,
+        'total_points': total_points,
+        'available_spaces': available_spaces
+    })
 
+# Clubs view
+@login_required
+def clubs(request):
+    return render(request, 'clubs.html')
 
-def course_list(request):
-    courses = Course.objects.all()
-    return render(request, 'courses.html', {'courses': courses})
+# Events view
+@login_required
+def events(request):
+    all_events = Event.objects.all()
+    return render(request, 'events.html', {'events': all_events})
 
-def course_detail(request, slug):
-    course = get_object_or_404(Course, slug=slug)
-    return render(request, 'course_detail.html', {'course': course})
+# AI Helper view
+@login_required
+def ai_helper(request):
+    return render(request, 'ai_helper.html')
 
-def register_course(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
-    if request.method == 'POST':
-        print(f"User {request.user} registered for {course.title}")
-        return redirect('course_detail', slug=course.slug)
+# Map view
+@login_required
+def map(request):
+    return render(request, 'map.html')
 
-
-def course_list(request):
-    courses = Course.objects.all()
-    return render(request, 'courses.html', {'courses': courses})
+@require_POST
+def book_space(request, space_id):
+    try:
+        space = Space.objects.get(id=space_id)
+        SpaceBooking.objects.create(user=request.user, space=space)
+        messages.success(request, f'Successfully booked {space.name}!')
+    except Space.DoesNotExist:
+        messages.error(request, 'Space not found.')
+    except Exception as e:
+        logger.error(f"Error booking space: {str(e)}")
+        messages.error(request, 'Error booking space. Please try again.')
+    return redirect('profile')

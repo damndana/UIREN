@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <link rel="stylesheet" href="signin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<style> /* Reset CSS */
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+  
+  /* Body */
+  body {
+      background: url('mainback.jpg') center/cover no-repeat;
+      font-family: 'Press Start 2P', cursive;
+      color: #fff;
+  }
+  
+  
+  
+  /* Sign In / Sign Up Section */
+  .sign-in-section {
+      padding: 50px 2rem;
+      min-height: 700px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .sign-in-container {
+      background: #22223b;
+      padding: 30px;
+      border-radius: 12px;
+      width: 150%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 16px #0003;
+  }
+  
+  h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 10px;
+  }
+  
+  .sign-in-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+  }
+  
+  input, select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+  }
+  
+  button {
+      background-color: #3a5ca8;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+      background-color: #b39ddb;
+  }
+  
+  p {
+      color: #fff;
+  }
+  
+  footer {
+      text-align: center;
+      margin-top: 50px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1rem;
+      color: #fff;
+      padding: 10px;
+      background: #22223b;
+  }</style>
+
+<section class="sign-in-section">
+    <div class="sign-in-container">
+        <h2>Sign In</h2>
+
+        <form class="sign-in-form">
+            <input type="email" id="email" placeholder="Enter Email" required><br>
+            <input type="password" id="password" placeholder="Enter Password" required><br>
+
+            <label for="role">Choose your role:</label>
+            <select id="role" required>
+                <option value="student">Student</option>
+                <option value="head">Head of Organization</option>
+            </select><br>
+
+            <label for="major">Choose your major:</label>
+            <select id="major" required>
+                <!-- Majors will be populated here dynamically -->
+            </select><br>
+
+            <!-- Optional Social GPA personality selection -->
+            <label for="personality">Choose your personality (optional):</label>
+            <select id="personality">
+                <!-- Personality types will be populated here dynamically -->
+            </select><br>
+
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+</section>
+
+<!-- JavaScript to Populate the Lists -->
+<script>
+    // Array of Majors
+    const majors = [
+        "Computer Science",
+        "Electrical Engineering",
+        "Mechanical Engineering",
+        "Civil Engineering",
+        "Architecture",
+        "Business Administration",
+        "Economics",
+        "Law",
+        "Education",
+        "Social Sciences",
+        "Psychology",
+        "Physics",
+        "Mathematics",
+        "Biology",
+        "Chemistry",
+        "Arts"
+    ];
+
+    // Array of Personality Types (16 personalities)
+    const personalities = [
+        "INTJ - The Architect",
+        "INTP - The Thinker",
+        "ENTJ - The Commander",
+        "ENTP - The Debater",
+        "INFJ - The Advocate",
+        "INFP - The Mediator",
+        "ENFJ - The Protagonist",
+        "ENFP - The Campaigner",
+        "ISTJ - The Logistician",
+        "ISFJ - The Defender",
+        "ESTJ - The Executive",
+        "ESFJ - The Consul",
+        "ISTP - The Virtuoso",
+        "ISFP - The Adventurer",
+        "ESTP - The Entrepreneur",
+        "ESFP - The Entertainer"
+    ];
+
+    // Function to populate dropdowns
+    function populateDropdown(id, options) {
+        const selectElement = document.getElementById(id);
+        options.forEach(option => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option;
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+        });
+    }
+
+    // Populate Majors and Personality dropdowns when the page loads
+    window.onload = function() {
+        populateDropdown("major", majors);
+        populateDropdown("personality", personalities);
+    };
+</script>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Sxodim.SDU</p>
+</footer>
+
+</body>
+</html>

@@ -1,15 +1,16 @@
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('courses/', views.course_list, name='courses'),
-    path('course/<slug:slug>/', views.course_detail, name='course_detail'),
-    path('course/<int:course_id>/register/', views.register_course, name='register_course'),
-    path('categories/', views.categories, name='categories'),
-    path('about/', views.about, name='about'),
-    path('signin/', views.signin, name='signin'),
-    path('register/tutor/', views.register_tutor, name='register_tutor'),
-    path('register/student/', views.register_student, name='register_student'),
     path('profile/', views.profile_view, name='profile'),
+    path('signin/', views.signin, name='signin'),
+    path('register/', views.register, name='register'),
+    path('clubs/', views.clubs, name='clubs'),
+    path('events/', views.events, name='events'),
+    path('ai_helper/', views.ai_helper, name='ai_helper'),
+    path('map/', views.map, name='map'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('book-space/<int:space_id>/', views.book_space, name='book_space'),
 ]

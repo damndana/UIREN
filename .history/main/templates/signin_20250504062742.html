@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <link rel="stylesheet" href="signin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<section class="sign-in-section">
+    <div class="sign-in-container">
+        <h2>Sign In</h2>
+
+        <form class="sign-in-form">
+            <input type="email" id="email" placeholder="Enter Email" required><br>
+            <input type="password" id="password" placeholder="Enter Password" required><br>
+
+            <label for="role">Choose your role:</label>
+            <select id="role" required>
+                <option value="student">Student</option>
+                <option value="head">Head of Organization</option>
+            </select><br>
+
+            <label for="major">Choose your major:</label>
+            <select id="major" required>
+                <!-- Majors will be populated here dynamically -->
+            </select><br>
+
+            <!-- Optional Social GPA personality selection -->
+            <label for="personality">Choose your personality (optional):</label>
+            <select id="personality">
+                <!-- Personality types will be populated here dynamically -->
+            </select><br>
+
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+</section>
+
+<!-- JavaScript to Populate the Lists -->
+<script>
+    // Array of Majors
+    const majors = [
+        "Computer Science",
+        "Electrical Engineering",
+        "Mechanical Engineering",
+        "Civil Engineering",
+        "Architecture",
+        "Business Administration",
+        "Economics",
+        "Law",
+        "Education",
+        "Social Sciences",
+        "Psychology",
+        "Physics",
+        "Mathematics",
+        "Biology",
+        "Chemistry",
+        "Arts"
+    ];
+
+    // Array of Personality Types (16 personalities)
+    const personalities = [
+        "INTJ - The Architect",
+        "INTP - The Thinker",
+        "ENTJ - The Commander",
+        "ENTP - The Debater",
+        "INFJ - The Advocate",
+        "INFP - The Mediator",
+        "ENFJ - The Protagonist",
+        "ENFP - The Campaigner",
+        "ISTJ - The Logistician",
+        "ISFJ - The Defender",
+        "ESTJ - The Executive",
+        "ESFJ - The Consul",
+        "ISTP - The Virtuoso",
+        "ISFP - The Adventurer",
+        "ESTP - The Entrepreneur",
+        "ESFP - The Entertainer"
+    ];
+
+    // Function to populate dropdowns
+    function populateDropdown(id, options) {
+        const selectElement = document.getElementById(id);
+        options.forEach(option => {
+            const optionElement = document.createElement("option");
+            optionElement.value = option;
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+        });
+    }
+
+    // Populate Majors and Personality dropdowns when the page loads
+    window.onload = function() {
+        populateDropdown("major", majors);
+        populateDropdown("personality", personalities);
+    };
+</script>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Sxodim.SDU</p>
+</footer>
+
+</body>
+</html>

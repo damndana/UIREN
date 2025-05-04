@@ -1,37 +1,49 @@
 from django import forms
-from .models import TutorProfile, StudentProfile
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from .models import UserProfile  # Assuming UserProfile model exists
 
-class TutorRegistrationForm(forms.Form):
-    full_name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    subject = forms.CharField(max_length=100)
-    experience = forms.IntegerField()
-    bio = forms.CharField(widget=forms.Textarea)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirm = cleaned_data.get("confirm_password")
-        if password != confirm:
-            raise forms.ValidationError("Passwords do not match.")
-        return cleaned_data
-
-class StudentRegistrationForm(forms.ModelForm):
-    full_name = forms.CharField()
-    email = forms.EmailField()
+# User registration form to create new users
+class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        model = StudentProfile
-        fields = ['major', 'education_level']
+        model = User
+        fields = ['username', 'email', 'password']
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('password') != cleaned_data.get('confirm_password'):
-            raise forms.ValidationError("Passwords do not match")
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password and confirm_password and password != confirm_password:
+            raise ValidationError("Passwords do not match")
         return cleaned_data
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+# User profile form to gather additional data
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile  # Assuming you have a UserProfile model
+        fields = ['role', 'major', 'personality']  # Add relevant fields from your UserProfile model
+        widgets = {
+            'role': forms.Select(choices=[
+                ('Student', 'Student'),
+                ('Teacher', 'Teacher'),
+                ('Staff', 'Staff'),
+            ]),
+            'major': forms.Select(choices=[
+                ('Undecided', 'Undecided'),
+                ('Computer Science', 'Computer Science'),
+                ('Engineering', 'Engineering'),
+                ('Business', 'Business'),
+                ('Arts', 'Arts'),
+            ]),
+        }

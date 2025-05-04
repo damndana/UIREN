@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    background: #7da0c4;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    background: #7da0c4;
+    padding: 0.5rem 2rem;
+    border-bottom: 4px solid #b39ddb;
+    font-size: 1.1rem;
+}
+
+.logo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #b39ddb;
+}
+
+.messages {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.message.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.content {
+    padding: 2rem;
+}
+
+/* Form styles */
+.form-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #22223b;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #22223b;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+}
+
+button {
+    width: 100%;
+    background: #3a5ca8;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background: #b39ddb;
+} 
